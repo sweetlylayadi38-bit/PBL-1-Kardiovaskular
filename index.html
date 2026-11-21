@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Modul Kardiovaskular · Langit Malam</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --maroon:#712727;
+    --maroon-deep:#5a1d1f;
+    --maroon-flame:#8e2a2a;
+    --rose:#be6364;
+    --rose-soft:#c97175;
+    --blush:#fbe6e6;
+    --white:#ffffff;
+    --ink:#3d1214;
+    --heart:#cf4943;
+    --radius-lg:44px;
+    --radius-md:24px;
+    --ease-out:cubic-bezier(.22,1,.36,1);
+    --font-display:"Fraunces", Georgia, serif;
+    --font-body:"Plus Jakarta Sans", system-ui, sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:var(--font-body);
+    color:var(--white);
+    background:var(--maroon);
+    line-height:1.6;
+    min-height:100vh;
+    overflow-x:hidden;
+  }
+  p{text-align:justify;hyphens:auto;-webkit-hyphens:auto}
+
+  /* ===== Background (dibuat ulang dari gambar) ===== */
+  .bg{position:fixed;inset:0;z-index:-1;pointer-events:none}
+  .bg svg{width:100%;height:100%;display:block}
+
+  a{color:inherit}
+  :focus-visible{outline:3px solid var(--blush);outline-offset:3px;border-radius:8px}
+
+  .wrap{width:min(1180px,100% - 40px);margin-inline:auto}
+
+  /* ===== Header ===== */
+  header{padding:22px 0}
+  .bar{display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .brand{display:flex;align-items:center;gap:12px;text-decoration:none;font-weight:700;letter-spacing:.01em}
+  .brand-mark{width:42px;height:42px;border-radius:14px;background:var(--rose-soft);display:grid;place-items:center;flex:none}
+  .brand small{display:block;font-weight:500;font-size:.78rem;opacity:.8;letter-spacing:.08em;text-transform:uppercase}
+  nav ul{display:flex;gap:6px;list-style:none}
+  nav a{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border-radius:999px;text-decoration:none;font-weight:600;font-size:.92rem;transition:background .2s var(--ease-out)}
+  nav a:hover{background:rgba(251,230,230,.14)}
+  .nav-cta{background:var(--white);color:var(--maroon)!important}
+  .nav-cta:hover{background:var(--blush)!important}
+
+  /* ===== Hero ===== */
+  .hero{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;padding:88px 0 96px}
+  .eyebrow{display:inline-flex;align-items:center;gap:10px;font-weight:600;font-size:.82rem;letter-spacing:.14em;text-transform:uppercase;background:rgba(90,29,31,.55);padding:8px 16px;border-radius:999px;backdrop-filter:blur(6px)}
+  .eyebrow i{width:8px;height:8px;border-radius:50%;background:var(--blush);animation:beat 1.1s infinite}
+  h1{font-family:var(--font-display);font-weight:700;font-size:clamp(2.6rem,5.6vw,4.6rem);line-height:1.02;letter-spacing:-.02em;margin:22px 0 22px;text-wrap:balance}
+  h1 em{font-style:italic;color:var(--blush);font-weight:500}
+  .lead{font-size:1.12rem;max-width:34em;opacity:.95}
+  .actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:28px}
+  .btn{display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:0 26px;border-radius:999px;font-weight:700;text-decoration:none;transition:transform .25s var(--ease-out),background .2s,box-shadow .25s}
+  .btn-primary{background:var(--white);color:var(--maroon);box-shadow:0 10px 30px -10px rgba(0,0,0,.45)}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 34px -12px rgba(0,0,0,.55)}
+  .btn-ghost{border:2px solid rgba(251,230,230,.6)}
+  .btn-ghost:hover{background:rgba(251,230,230,.12)}
+  .btn svg{width:18px;height:18px}
+
+  /* Kartu jantung meniru gambar: bingkai putih, isi merah muda, lencana detak */
+  .card-art{position:relative;justify-self:center;width:min(440px,100%)}
+  .frame{background:var(--white);padding:18px;border-radius:var(--radius-lg);box-shadow:0 40px 80px -30px rgba(40,6,8,.7);transform:rotate(-2deg);transition:transform .6s var(--ease-out)}
+  .card-art:hover .frame{transform:rotate(0deg) translateY(-4px)}
+  .frame-inner{background:var(--blush);border-radius:calc(var(--radius-lg) - 14px);overflow:hidden;aspect-ratio:653/754}
+  .frame-inner img{width:100%;height:100%;object-fit:cover;display:block;animation:pump 1.6s var(--ease-out) infinite}
+  .pulse-badge{position:absolute;right:-34px;bottom:44px;width:150px;filter:drop-shadow(0 12px 22px rgba(40,6,8,.35))}
+  .pulse-badge path.line{stroke-dasharray:260;stroke-dashoffset:260;animation:draw 2.4s linear infinite}
+
+  /* ===== Section umum ===== */
+  section{padding:88px 0}
+  .sec-head{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:40px;flex-wrap:wrap}
+  .sec-head h2{font-family:var(--font-display);font-size:clamp(2rem,3.6vw,2.9rem);line-height:1.08;letter-spacing:-.015em;max-width:14em}
+  .sec-head p{max-width:30em;opacity:.9}
+  .kicker{font-weight:700;font-size:.8rem;letter-spacing:.16em;text-transform:uppercase;color:var(--blush);opacity:.85;margin-bottom:10px}
+
+  /* ===== Kartu sumatif ===== */
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+  .tile{position:relative;display:flex;flex-direction:column;gap:14px;min-height:300px;padding:28px 24px;background:var(--blush);color:var(--ink);border-radius:var(--radius-md);text-decoration:none;overflow:hidden;transition:transform .35s var(--ease-out),box-shadow .35s var(--ease-out)}
+  .tile:hover{transform:translateY(-6px);box-shadow:0 26px 50px -24px rgba(30,4,6,.8)}
+  .tile .num{font-family:var(--font-display);font-size:3.4rem;line-height:1;color:var(--heart);font-weight:700}
+  .tile h3{font-size:1.2rem;font-weight:700}
+  .tile p{font-size:.95rem;color:#6a2d30}
+  .tile .go{margin-top:auto;display:inline-flex;align-items:center;gap:8px;font-weight:700;color:var(--maroon)}
+  .tile .go svg{transition:transform .3s var(--ease-out)}
+  .tile:hover .go svg{transform:translateX(5px)}
+  .tile.feature{background:var(--white)}
+  .tile::after{content:"";position:absolute;right:-40px;top:-40px;width:120px;height:120px;border-radius:50%;background:rgba(207,73,67,.08)}
+
+  .grid.three{grid-template-columns:repeat(4,1fr)}
+  .grid.three .tile{min-height:240px}
+  /* ===== Alur darah ===== */
+  .flow-panel{background:rgba(90,29,31,.62);backdrop-filter:blur(10px);border:1px solid rgba(251,230,230,.16);border-radius:var(--radius-lg);padding:44px}
+  .flow{list-style:none;display:grid;grid-template-columns:repeat(6,1fr);gap:0;counter-reset:s;position:relative}
+  .flow li{position:relative;padding:0 10px;text-align:center}
+  .flow .dot{width:58px;height:58px;margin:0 auto 14px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-family:var(--font-display);font-size:1.3rem;position:relative;z-index:1}
+  .flow li.v .dot{background:#6b9cc7;color:#fff}
+  .flow li.a .dot{background:var(--heart);color:#fff}
+  .flow li.l .dot{background:var(--rose);color:#fff}
+  .flow li:not(:last-child)::after{content:"";position:absolute;top:29px;left:calc(50% + 34px);right:calc(-50% + 34px);height:3px;border-radius:3px;background:repeating-linear-gradient(90deg,rgba(251,230,230,.7) 0 8px,transparent 8px 14px);animation:flowdash 1s linear infinite}
+  .flow strong{display:block;font-size:.98rem}
+  .flow span{display:block;font-size:.84rem;opacity:.8;margin-top:4px}
+  .legend{display:flex;gap:22px;flex-wrap:wrap;margin-top:34px;font-size:.88rem;opacity:.9}
+  .legend b{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:8px;vertical-align:-1px}
+
+  /* ===== Footer ===== */
+  footer{padding:40px 0 56px;border-top:1px solid rgba(251,230,230,.18);font-size:.9rem;opacity:.85}
+  footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+  /* ===== Reveal ===== */
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .8s var(--ease-out),transform .8s var(--ease-out)}
+  .reveal.in{opacity:1;transform:none}
+
+  @keyframes beat{0%,100%{transform:scale(1);opacity:1}30%{transform:scale(1.6);opacity:.6}}
+  @keyframes pump{0%,100%{transform:scale(1)}12%{transform:scale(1.025)}24%{transform:scale(1)}36%{transform:scale(1.015)}}
+  @keyframes draw{0%{stroke-dashoffset:260}60%,100%{stroke-dashoffset:0}}
+  @keyframes flowdash{to{background-position:14px 0}}
+
+  @media (max-width:1000px){
+    .hero{grid-template-columns:1fr;gap:48px;padding-top:24px}
+    .card-art{width:min(360px,86%)}
+    .grid,.grid.three{grid-template-columns:repeat(2,1fr)}
+    .flow{grid-template-columns:repeat(3,1fr);row-gap:30px}
+    .flow li:nth-child(3)::after{display:none}
+  }
+  @media (max-width:640px){
+    nav ul li:not(:last-child){display:none}
+    .grid,.grid.three{grid-template-columns:1fr}
+    .grid.three .tile{min-height:0}
+    .tile{min-height:0}
+    .flow{grid-template-columns:repeat(2,1fr)}
+    .flow li::after{display:none}
+    .flow-panel{padding:30px 20px}
+    .pulse-badge{width:110px;right:-14px}
+    section{padding:64px 0}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+    .reveal{opacity:1;transform:none}
+    .pulse-badge path.line{stroke-dashoffset:0}
+  }
+</style>
+</head>
+<body>
+
+<!-- Latar: marun dengan pita gelombang merah muda & lidah api gelap, seperti gambar -->
+<div class="bg" aria-hidden="true">
+  <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1440" height="900" fill="#712727"/>
+    <!-- pita merah muda diagonal -->
+    <path fill="#be6364" d="M860 0 C900 70 980 120 1080 110 C1200 98 1300 40 1350 0 L1440 0 L1440 250 C1340 280 1250 330 1170 420 C1060 540 960 610 820 660 C650 720 470 760 300 840 C230 872 170 890 120 900 L0 900 L0 610 C110 600 220 560 330 500 C470 425 560 330 640 230 C710 140 770 60 800 0 Z"/>
+    <!-- lidah api gelap di dalam pita -->
+    <g fill="#8e2a2a">
+      <path d="M1160 60 C1120 120 1060 150 990 160 C1050 140 1090 100 1110 40 C1125 0 1150 -10 1170 0 Z"/>
+      <path d="M1440 120 C1380 160 1330 230 1300 300 C1290 230 1330 150 1400 100 Z"/>
+      <path d="M1250 290 C1180 330 1120 400 1080 470 C1060 520 1020 560 960 580 C1030 520 1050 450 1110 380 C1160 320 1210 295 1250 290 Z"/>
+      <path d="M760 520 C700 590 620 640 520 670 C600 620 660 560 700 500 C730 455 770 460 760 520 Z"/>
+      <path d="M560 360 C520 420 460 470 380 500 C440 450 480 400 510 340 C530 300 575 315 560 360 Z"/>
+      <path d="M420 760 C360 800 290 830 210 850 C270 815 320 780 360 740 C390 712 440 730 420 760 Z"/>
+      <path d="M880 300 C860 350 820 380 770 400 C810 360 830 320 840 280 C848 250 892 262 880 300 Z"/>
+    </g>
+    <!-- aksen merah muda kecil di pinggir -->
+    <path fill="#be6364" d="M0 120 C40 140 70 190 60 250 C50 300 20 320 0 330 Z" opacity=".85"/>
+    <path fill="#be6364" d="M1440 760 C1380 770 1330 810 1310 860 C1300 880 1300 892 1302 900 L1440 900 Z" opacity=".9"/>
+    <path fill="#8e2a2a" d="M120 900 C150 860 200 840 250 845 C215 860 190 880 180 900 Z"/>
+  </svg>
+</div>
+
+
+<main id="top">
+  <div class="wrap hero">
+    <div>
+      <span class="eyebrow"><i aria-hidden="true"></i> Modul Kardiovaskular</span>
+      <div class="actions">
+        <a class="btn btn-primary" href="#presentasi" aria-controls="presentasi" aria-expanded="false" onclick="var p=document.getElementById('presentasi');p.hidden=!p.hidden;this.setAttribute('aria-expanded',!p.hidden);if(p.hidden)event.preventDefault()">Mulai Presentasi
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <figure class="card-art">
+      <div class="frame">
+        <div class="frame-inner">
+          <img src="heart.png" width="653" height="754" alt="Ilustrasi jantung manusia dengan aorta, arteri pulmonalis, dan vena kava superior">
+        </div>
+      </div>
+      <svg class="pulse-badge" viewBox="0 0 160 150" aria-hidden="true">
+        <path fill="#c97175" d="M80 146 C70 138 8 96 4 52 C1 22 24 2 48 4 C64 5 74 14 80 26 C86 14 96 5 112 4 C136 2 159 22 156 52 C152 96 90 138 80 146 Z"/>
+        <path class="line" d="M26 64 H52 L62 36 L76 92 L90 46 L100 70 L106 58 H134" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="26" cy="64" r="7" fill="#fff"/><circle cx="134" cy="58" r="7" fill="#fff"/>
+      </svg>
+    </figure>
+  </div>
+
+  <section id="presentasi" hidden>
+    <div class="wrap">
+      <div class="grid three">
+        <a class="tile feature reveal" href="aorta-dan-cabangnya.html">
+          <span class="num">01</span>
+          <h3>Aorta dan Cabangnya</h3>
+          <span class="go">Buka presentasi <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </a>
+        <a class="tile reveal" href="arteri-kepala-leher.html">
+          <span class="num">02</span>
+          <h3>Arteri Kepala dan Leher</h3>
+          <span class="go">Buka presentasi <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </a>
+        <a class="tile reveal" href="arteri-ekstremitas-atas.html">
+          <span class="num">03</span>
+          <h3>Arteri Ekstremitas Atas</h3>
+          <span class="go">Buka presentasi <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </a>
+        <a class="tile reveal" href="arteri-tungkai.html">
+          <span class="num">04</span>
+          <h3>Arteri Ekstremitas Bawah</h3>
+          <span class="go">Buka presentasi <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="alur">
+    <div class="wrap">
+      <div class="flow-panel reveal">
+        <p class="kicker" style="margin-bottom:0">Referensi</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+  (function(){
+    var els=document.querySelectorAll('.reveal');
+    if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in')});return;}
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(en,i){
+        if(en.isIntersecting){
+          en.target.style.transitionDelay=(i*70)+'ms';
+          en.target.classList.add('in');io.unobserve(en.target);
+        }
+      });
+    },{threshold:.15});
+    els.forEach(function(e){io.observe(e)});
+  })();
+</script>
+</body>
+</html>
