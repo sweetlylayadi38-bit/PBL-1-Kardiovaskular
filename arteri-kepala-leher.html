@@ -477,7 +477,7 @@ function prepare(fig) {
     const flow = fig.querySelector(".flow");
     flow.style.webkitMaskImage = flow.style.maskImage = `url(${bc.toDataURL()})`;
     for (const id in lines) lines[id].forEach((line, i) => {
-      const run = FLIP.has(`${key}.${id}.${i}`) ? [...line].reverse() : line;
+      const run = FLIP.has(`${key}.${id}.${i}`) ? line.toReversed() : line;
       const pl = el("polyline", { points: pts(run), pathLength: 1 }, flow);
       pl.dataset.v = id;
       // branches light up after the trunk that feeds them
