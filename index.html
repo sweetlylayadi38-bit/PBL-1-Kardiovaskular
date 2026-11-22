@@ -167,8 +167,13 @@
   .refs{padding-left:1.4em;display:grid;gap:10px;font-size:.95rem;line-height:1.55}
   .refs li{text-align:justify;hyphens:auto;padding-left:.3em}
   .refs a{color:var(--blush);word-break:break-all}
-  .grid.single{grid-template-columns:minmax(0,560px)}
+  .grid.single{grid-template-columns:minmax(0,720px)}
   .grid.single .tile{min-height:0}
+  .tile .lux{font-family:var(--font-display);font-size:clamp(2rem,3.4vw,2.7rem);font-weight:700;line-height:1.02;letter-spacing:-.02em;color:var(--ink)}
+  .tile .lux em{font-style:italic;font-weight:500;color:var(--heart)}
+  .parts{display:grid;gap:12px;margin-top:4px}
+  .parts p{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:baseline;color:#6a2d30;font-size:.98rem;line-height:1.5}
+  .parts b{font-family:var(--font-display);font-style:italic;font-weight:700;font-size:.95rem;color:#fff;background:var(--heart);padding:3px 12px;border-radius:999px;white-space:nowrap}
 </style>
 </head>
 <body>
@@ -226,8 +231,11 @@
     <div class="wrap">
       <div class="grid single">
         <a class="tile feature reveal" href="presentasi-lengkap.html">
-          <h3>Presentasi Lengkap</h3>
-          <p>Part 1: Aorta, Arteri Kepala dan Leher, Arteri Ekstremitas Atas dan Bawah. Part 2: Vena Kepala dan Leher, Vena Ekstremitas Atas dan Bawah.</p>
+          <h3 class="lux">Presentasi <em>Lengkap</em></h3>
+          <div class="parts">
+            <p><b>Part 1</b><span>Aorta dan Cabangnya · Arteri Kepala dan Leher · Arteri Ekstremitas Atas · Arteri Ekstremitas Bawah</span></p>
+            <p><b>Part 2</b><span>Vena Kepala dan Leher · Vena Ekstremitas Atas · Vena Ekstremitas Bawah</span></p>
+          </div>
           <span class="go">Buka presentasi <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
         </a>
       </div>
