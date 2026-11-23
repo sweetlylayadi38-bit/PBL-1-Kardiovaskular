@@ -6,27 +6,390 @@
 <title>Mind Map · Modul Kardiovaskular</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+  :root{
+    --maroon:#712727; --maroon-deep:#5a1d1f; --rose:#be6364; --blush:#fbe6e6;
+    --ink:#3d1214; --ink-soft:#6a2d30; --heart:#cf4943; --vein:#4f7fae; --vein-soft:#e4edf6;
+    --ease:cubic-bezier(.22,1,.36,1);
+    --display:"Fraunces",Georgia,serif; --body:"Plus Jakarta Sans",system-ui,sans-serif;
+  }
   *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:"Plus Jakarta Sans",system-ui,sans-serif;background:#712727;color:#fff;min-height:100vh;display:grid;place-items:center;padding:40px 20px;line-height:1.6}
-  .card{background:#fbe6e6;color:#3d1214;border-radius:24px;padding:40px 32px;max-width:560px;width:100%}
-  h1{font-family:"Fraunces",Georgia,serif;font-size:clamp(2rem,5vw,2.8rem);line-height:1.05;margin-bottom:14px}
-  h1 em{font-style:italic;font-weight:500;color:#cf4943}
-  p{text-align:justify;hyphens:auto;color:#6a2d30;margin-bottom:24px}
-  a{display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:0 22px;border-radius:999px;background:#712727;color:#fff;font-weight:700;text-decoration:none}
-  a:hover{background:#5a1d1f}
-  :focus-visible{outline:3px solid #cf4943;outline-offset:3px}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--body);background:var(--maroon);color:#fff;line-height:1.55;min-height:100vh;
+    background-image:radial-gradient(1200px 600px at 110% -10%,rgba(190,99,100,.55),transparent 60%),radial-gradient(900px 500px at -10% 110%,rgba(190,99,100,.4),transparent 60%);background-attachment:fixed}
+  p,.note{text-align:justify;hyphens:auto;-webkit-hyphens:auto}
+  a{color:inherit}
+  :focus-visible{outline:3px solid var(--blush);outline-offset:3px;border-radius:8px}
+  .wrap{width:min(1180px,100% - 40px);margin-inline:auto}
+
+  header{padding:22px 0}
+  .back{display:inline-flex;align-items:center;gap:10px;min-height:44px;padding:0 18px;border-radius:999px;background:rgba(251,230,230,.12);text-decoration:none;font-weight:600;font-size:.92rem}
+  .back:hover{background:rgba(251,230,230,.22)}
+
+  .intro{padding:28px 0 36px;display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap}
+  .kicker{font-weight:700;font-size:.8rem;letter-spacing:.16em;text-transform:uppercase;color:var(--blush);opacity:.85;margin-bottom:10px}
+  h1{font-family:var(--display);font-size:clamp(2.4rem,5vw,4rem);line-height:1.02;letter-spacing:-.02em}
+  h1 em{font-style:italic;font-weight:500;color:var(--blush)}
+  .intro p{max-width:34em;opacity:.92;margin-top:14px}
+  .tools{display:flex;gap:10px;flex-wrap:wrap}
+  .tools button{font:inherit;font-weight:700;font-size:.9rem;min-height:44px;padding:0 18px;border-radius:999px;border:2px solid rgba(251,230,230,.6);background:transparent;color:#fff;cursor:pointer;transition:background .2s}
+  .tools button:hover{background:rgba(251,230,230,.14)}
+  .tools button.solid{background:#fff;color:var(--maroon);border-color:#fff}
+  .tools button.solid:hover{background:var(--blush)}
+
+  /* ===== Akar mind map ===== */
+  .root{display:flex;flex-direction:column;align-items:center;margin-bottom:8px}
+  .root-node{background:#fff;color:var(--maroon);font-family:var(--display);font-weight:700;font-size:clamp(1.3rem,2.4vw,1.7rem);padding:16px 30px;border-radius:999px;box-shadow:0 18px 40px -18px rgba(20,2,4,.8);text-align:center}
+  .root-node small{display:block;font-family:var(--body);font-size:.78rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--rose)}
+  .root-stem{width:3px;height:30px;background:rgba(251,230,230,.55)}
+  .root-bar{height:3px;width:50%;background:rgba(251,230,230,.55);border-radius:3px}
+
+  .halves{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
+  .half{position:relative;padding-top:30px}
+  .half::before{content:"";position:absolute;top:0;left:50%;width:3px;height:30px;background:rgba(251,230,230,.55)}
+  .branch-head{display:flex;align-items:center;justify-content:center;gap:12px;margin:0 auto 22px;width:max-content;max-width:100%;padding:12px 24px;border-radius:999px;font-weight:700;font-size:1.05rem;color:#fff}
+  .branch-head b{font-family:var(--display);font-style:italic;font-weight:500;font-size:.95rem;background:rgba(255,255,255,.2);padding:2px 12px;border-radius:999px}
+  .art .branch-head{background:var(--heart)}
+  .ven .branch-head{background:var(--vein)}
+  .half > p.summary{background:rgba(90,29,31,.55);border:1px solid rgba(251,230,230,.16);border-radius:18px;padding:14px 18px;font-size:.92rem;margin-bottom:18px}
+
+  /* ===== Kartu topik ===== */
+  .topic{background:var(--blush);color:var(--ink);border-radius:24px;margin-bottom:16px;overflow:hidden;box-shadow:0 20px 40px -26px rgba(20,2,4,.9)}
+  .ven .topic{background:#fff}
+  .topic > summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:14px;padding:18px 20px;min-height:64px}
+  .topic > summary::-webkit-details-marker{display:none}
+  .topic .no{flex:none;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-family:var(--display);font-weight:700;color:#fff;background:var(--heart)}
+  .ven .topic .no{background:var(--vein)}
+  .topic h2{font-size:1.08rem;font-weight:700;line-height:1.25}
+  .topic h2 span{display:block;font-size:.82rem;font-weight:500;color:var(--ink-soft);margin-top:2px}
+  .chev{margin-left:auto;flex:none;width:22px;height:22px;transition:transform .3s var(--ease);color:var(--maroon)}
+  .topic[open] > summary .chev{transform:rotate(180deg)}
+  .topic-body{padding:0 20px 20px}
+  .go{display:inline-flex;align-items:center;gap:8px;margin-top:14px;font-weight:700;font-size:.88rem;color:var(--maroon);text-decoration:none}
+  .go:hover{text-decoration:underline}
+
+  /* ===== Pohon cabang ===== */
+  .tree,.tree ul{list-style:none}
+  .tree ul{margin-left:14px;padding-left:18px;border-left:2px solid rgba(207,73,67,.35)}
+  .ven .tree ul{border-left-color:rgba(79,127,174,.4)}
+  .tree li{position:relative;padding:7px 0 7px 0}
+  .tree ul > li::before{content:"";position:absolute;left:-18px;top:20px;width:14px;border-top:2px solid rgba(207,73,67,.35)}
+  .ven .tree ul > li::before{border-top-color:rgba(79,127,174,.4)}
+  .node{display:inline-block;font-weight:700;font-size:.95rem;padding:4px 12px;border-radius:999px;background:#fff;border:1.5px solid rgba(207,73,67,.4);color:var(--ink)}
+  .ven .node{background:var(--vein-soft);border-color:rgba(79,127,174,.45)}
+  .tree > li > .node{background:var(--heart);border-color:var(--heart);color:#fff}
+  .ven .tree > li > .node{background:var(--vein);border-color:var(--vein);color:#fff}
+  .note{display:block;font-size:.88rem;color:var(--ink-soft);margin:5px 0 0 4px}
+  .tag{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:1px 8px;border-radius:999px;margin-right:6px;vertical-align:1px}
+  .tag.klinik{background:#cf4943;color:#fff}
+  .tag.ingat{background:#7a5a2a;color:#fff}
+
+  footer{padding:40px 0 56px;margin-top:40px;border-top:1px solid rgba(251,230,230,.18);font-size:.9rem;opacity:.85}
+
+  @media (max-width:900px){
+    .halves{grid-template-columns:1fr;gap:10px}
+    .root-bar{display:none}
+    .half::before{display:none}
+    .half{padding-top:10px}
+  }
+  @media (max-width:520px){
+    .topic > summary{padding:16px}
+    .topic-body{padding:0 14px 16px}
+    .tree ul{margin-left:6px;padding-left:14px}
+    .tree ul > li::before{left:-14px;width:10px}
+  }
+  @media print{
+    body{background:#fff;color:#000}
+    .tools,.back,.chev{display:none}
+    .topic{break-inside:avoid;box-shadow:none;border:1px solid #ccc}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
 <body>
-  <main class="card">
-    <h1>Mind <em>Map</em></h1>
-    <p>Mind map Modul Kardiovaskular sedang disiapkan dan akan ditampilkan di halaman ini.</p>
-    <a href="index.html">
+
+<header>
+  <div class="wrap">
+    <a class="back" href="index.html">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
-      Kembali ke beranda
+      Beranda
     </a>
-  </main>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="intro">
+    <div>
+      <p class="kicker">Modul Kardiovaskular</p>
+      <h1>Mind <em>Map</em></h1>
+      <p>Peta ringkas pembuluh darah sistemik, mengikuti arah aliran darah: arteri dari jantung ke perifer, lalu vena dari perifer kembali ke jantung. Klik tiap topik untuk membuka cabangnya.</p>
+    </div>
+    <div class="tools">
+      <button type="button" class="solid" id="openAll">Buka semua</button>
+      <button type="button" id="closeAll">Tutup semua</button>
+    </div>
+  </div>
+
+  <div class="root">
+    <div class="root-node"><small>Anatomi</small>Pembuluh Darah Sistemik</div>
+    <div class="root-stem"></div>
+    <div class="root-bar"></div>
+  </div>
+
+  <div class="halves">
+
+    <!-- ================= PART 1 · ARTERI ================= -->
+    <section class="half art" aria-labelledby="h-art">
+      <div class="branch-head" id="h-art"><b>Part 1</b> Arteri</div>
+      <p class="summary">Arteri membawa darah <strong>menjauhi jantung</strong>. Semua arteri sistemik berasal dari aorta yang keluar dari ventrikel kiri.</p>
+
+      <details class="topic">
+        <summary><span class="no">1</span><h2>Aorta dan Cabangnya<span>Batang utama arteri sistemik</span></h2>
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+        <div class="topic-body">
+          <ul class="tree">
+            <li><span class="node">Aorta ascendens</span><span class="note">Keluar dari ventrikel kiri.</span>
+              <ul><li><span class="node">a. coronaria dextra &amp; sinistra</span><span class="note">Cabang pertama aorta, memperdarahi jantung sendiri.</span></li></ul>
+            </li>
+            <li><span class="node">Arcus aortae</span><span class="note">Berakhir setinggi T4 (angulus sterni). Tiga cabang dari kanan ke kiri:</span>
+              <ul>
+                <li><span class="node">Truncus brachiocephalicus</span><span class="note">Bercabang menjadi a. carotis communis dextra dan a. subclavia dextra.</span></li>
+                <li><span class="node">a. carotis communis sinistra</span></li>
+                <li><span class="node">a. subclavia sinistra</span></li>
+              </ul>
+            </li>
+            <li><span class="node">Aorta thoracica</span><span class="note">Aorta descendens di rongga dada, di belakang jantung.</span>
+              <ul>
+                <li><span class="node">aa. intercostales posteriores</span></li>
+                <li><span class="node">aa. bronchiales</span></li>
+                <li><span class="node">aa. oesophageales</span></li>
+              </ul>
+            </li>
+            <li><span class="node">Aorta abdominalis</span><span class="note">Mulai setelah menembus diafragma (hiatus aorticus, T12).</span>
+              <ul>
+                <li><span class="node">Cabang viseral tunggal</span><span class="note">Truncus coeliacus, a. mesenterica superior, a. mesenterica inferior.</span></li>
+                <li><span class="node">Cabang viseral berpasangan</span><span class="note">aa. renales, aa. gonadales.</span></li>
+                <li><span class="node">Cabang dinding</span><span class="note">aa. lumbales.</span></li>
+              </ul>
+            </li>
+            <li><span class="node">Bifurcatio aortae</span><span class="note">Setinggi L4, membelah menjadi a. iliaca communis dextra dan sinistra.</span></li>
+          </ul>
+          <a class="go" href="aorta-dan-cabangnya.html">Lihat presentasi →</a>
+        </div>
+      </details>
+
+      <details class="topic">
+        <summary><span class="no">2</span><h2>Arteri Kepala dan Leher<span>Jalur depan (karotis) &amp; jalur belakang (vertebrobasilar)</span></h2>
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+        <div class="topic-body">
+          <ul class="tree">
+            <li><span class="node">a. carotis communis</span><span class="note">Kanan dari truncus brachiocephalicus, kiri langsung dari arcus aortae. Berjalan dalam selubung karotis bersama v. jugularis interna dan n. vagus. Tidak bercabang di leher; membelah setinggi tepi atas kartilago tiroid (±C4).</span>
+              <ul>
+                <li><span class="node">Sinus &amp; glomus caroticum</span><span class="note">Sinus caroticus memantau tekanan darah; glomus caroticum memantau kadar O₂ dan CO₂.</span></li>
+                <li><span class="node">a. carotis interna</span><span class="note">Tidak bercabang di leher, masuk tengkorak lewat canalis caroticus, berkelok di sinus cavernosus. Cabang: a. ophthalmica, a. communicans posterior, a. choroidea anterior, berakhir sebagai a. cerebri anterior dan media. Memperdarahi ±2/3 depan otak besar.</span>
+                  <span class="note"><span class="tag klinik">Klinik</span>Stenosis dapat menimbulkan stroke atau amaurosis fugax (buta sesaat satu mata).</span></li>
+                <li><span class="node">a. carotis externa</span><span class="note">Memperdarahi struktur di luar tengkorak. Delapan cabang: thyroidea superior, pharyngea ascendens, lingualis, facialis, occipitalis, auricularis posterior, maxillaris, temporalis superficialis.</span>
+                  <ul>
+                    <li><span class="node">a. maxillaris</span><span class="note">Memperdarahi semua gigi.</span></li>
+                    <li><span class="node">a. temporalis superficialis</span><span class="note">Denyutnya teraba di depan telinga. <span class="tag klinik">Klinik</span>Arteritis temporalis dapat menyebabkan kebutaan.</span></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li><span class="node">a. subclavia</span><span class="note">Cabang: a. vertebralis, a. thoracica interna, truncus thyrocervicalis, truncus costocervicalis, a. dorsalis scapulae.</span>
+              <ul>
+                <li><span class="node">a. vertebralis</span><span class="note">Naik melalui foramen transversarium C6–C1, masuk tengkorak lewat foramen magnum. Cabang: a. spinalis anterior &amp; posterior, PICA.</span>
+                  <span class="note"><span class="tag klinik">Klinik</span>Sumbatan PICA → sindroma Wallenberg.</span></li>
+              </ul>
+            </li>
+            <li><span class="node">a. basilaris</span><span class="note">Gabungan kedua a. vertebralis di tepi bawah pons. Cabang: AICA, a. cerebelli superior, a. labyrinthi, aa. pontis. Memperdarahi batang otak, serebelum, dan telinga dalam.</span>
+              <span class="note"><span class="tag klinik">Klinik</span>Sumbatan → locked-in syndrome.</span>
+              <ul>
+                <li><span class="node">a. cerebri posterior</span><span class="note">Cabang akhir a. basilaris; memperdarahi lobus oksipital, talamus, hipokampus. <span class="tag klinik">Klinik</span>Hemianopia homonim.</span></li>
+              </ul>
+            </li>
+            <li><span class="node">Circulus Willisi</span><span class="note">Cincin anastomosis di dasar otak: a. cerebri anterior, a. communicans anterior, ujung a. carotis interna, a. communicans posterior, a. cerebri posterior.</span>
+              <span class="note"><span class="tag ingat">Cara ingat</span>Seperti bundaran lalu lintas: bila satu jalur menyempit perlahan, darah memutar lewat jalur lain.</span></li>
+          </ul>
+          <a class="go" href="arteri-kepala-leher.html">Lihat presentasi →</a>
+        </div>
+      </details>
+
+      <details class="topic">
+        <summary><span class="no">3</span><h2>Arteri Ekstremitas Atas<span>Satu batang yang berganti nama</span></h2>
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+        <div class="topic-body">
+          <ul class="tree">
+            <li><span class="node">a. subclavia</span><span class="note">Berganti nama di tepi lateral costa I.</span>
+              <ul>
+                <li><span class="node">a. axillaris</span><span class="note">Di ketiak; berganti nama di tepi bawah m. teres major. Cabang antara lain a. circumflexa humeri anterior &amp; posterior.</span>
+                  <ul>
+                    <li><span class="node">a. brachialis</span><span class="note">Di lengan atas, sisi medial. Cabang: a. profunda brachii, aa. collaterales ulnares. Membelah dua di fossa cubiti.</span>
+                      <span class="note"><span class="tag klinik">Klinik</span>Tempat mengukur tekanan darah.</span>
+                      <ul>
+                        <li><span class="node">a. radialis</span><span class="note">Sisi lateral lengan bawah; terutama membentuk arcus palmaris profundus. <span class="tag klinik">Klinik</span>Tempat meraba nadi di pergelangan tangan.</span></li>
+                        <li><span class="node">a. ulnaris</span><span class="note">Sisi medial; memberi a. interossea (anterior &amp; posterior); terutama membentuk arcus palmaris superficialis.</span></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li><span class="node">Arcus palmaris</span><span class="note">Superficialis dan profundus saling beranastomosis di telapak tangan.</span>
+              <ul><li><span class="node">aa. digitales</span><span class="note">Ke jari-jari tangan.</span></li></ul>
+            </li>
+          </ul>
+          <a class="go" href="arteri-ekstremitas-atas.html">Lihat presentasi →</a>
+        </div>
+      </details>
+
+      <details class="topic">
+        <summary><span class="no">4</span><h2>Arteri Ekstremitas Bawah<span>Dari bifurcatio aortae sampai kaki</span></h2>
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+        <div class="topic-body">
+          <ul class="tree">
+            <li><span class="node">a. iliaca communis</span>
+              <ul>
+                <li><span class="node">a. iliaca interna</span><span class="note">Masuk pelvis minor. Cabang: a. sacralis lateralis, a. pudenda interna, a. obturatoria, aa. gluteae.</span></li>
+                <li><span class="node">a. iliaca externa</span><span class="note">Berganti nama setelah lewat di bawah lig. inguinale.</span>
+                  <ul>
+                    <li><span class="node">a. femoralis</span><span class="note">Di trigonum femorale. <span class="tag klinik">Klinik</span>Nadi femoralis.</span>
+                      <ul>
+                        <li><span class="node">a. profunda femoris</span><span class="note">±4 cm di bawah lig. inguinale. Cabang: a. circumflexa femoris medialis &amp; lateralis, aa. perforantes.</span></li>
+                        <li><span class="node">a. poplitea</span><span class="note">Lanjutan a. femoralis setelah hiatus adductorius; di belakang lutut, memberi aa. genus.</span>
+                          <ul>
+                            <li><span class="node">a. tibialis anterior</span><span class="note">Lewat di atas membrana interossea ke kompartemen anterior tungkai.</span>
+                              <ul><li><span class="node">a. dorsalis pedis</span><span class="note">Di punggung kaki. <span class="tag klinik">Klinik</span>Nadi dorsalis pedis.</span></li></ul>
+                            </li>
+                            <li><span class="node">a. tibialis posterior</span><span class="note">Kompartemen posterior; teraba di belakang malleolus medialis.</span>
+                              <ul>
+                                <li><span class="node">a. fibularis (peronea)</span><span class="note">±2–3 cm di bawah m. popliteus.</span></li>
+                                <li><span class="node">a. plantaris medialis &amp; lateralis</span><span class="note">Ke telapak kaki.</span></li>
+                              </ul>
+                            </li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <a class="go" href="arteri-tungkai.html">Lihat presentasi →</a>
+        </div>
+      </details>
+    </section>
+
+    <!-- ================= PART 2 · VENA ================= -->
+    <section class="half ven" aria-labelledby="h-ven">
+      <div class="branch-head" id="h-ven"><b>Part 2</b> Vena</div>
+      <p class="summary">Vena membawa darah <strong>kembali ke jantung</strong>. Semua vena sistemik bermuara ke atrium kanan melalui v. cava superior dan v. cava inferior.</p>
+
+      <details class="topic">
+        <summary><span class="no">5</span><h2>Vena Kepala, Leher &amp; Vena Cava<span>Muara akhir menuju atrium kanan</span></h2>
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+        <div class="topic-body">
+          <ul class="tree">
+            <li><span class="node">Sinus duramater</span><span class="note">Saluran vena tanpa katup di antara dua lapisan duramater.</span>
+              <ul>
+                <li><span class="node">Alur utama</span><span class="note">Sinus sagittalis superior → confluens sinuum → sinus transversus → sinus sigmoideus → v. jugularis interna (di foramen jugulare).</span></li>
+                <li><span class="node">Sinus rectus</span><span class="note">Menampung sinus sagittalis inferior dan v. cerebri magna.</span></li>
+                <li><span class="node">Sinus cavernosus</span><span class="note">Menerima vv. ophthalmicae dan sinus sphenoparietalis; dialirkan oleh sinus petrosus superior &amp; inferior.</span></li>
+              </ul>
+            </li>
+            <li><span class="node">Vena wajah &amp; kulit kepala</span>
+              <ul>
+                <li><span class="node">v. facialis</span><span class="note">Mulai sebagai v. angularis di sudut medial mata.</span></li>
+                <li><span class="node">v. retromandibularis</span><span class="note">Gabungan v. temporalis superficialis dan v. maxillaris.</span></li>
+              </ul>
+            </li>
+            <li><span class="node">v. jugularis interna</span><span class="note">Dalam selubung karotis, lateral dari a. carotis communis. Menampung darah otak dan leher bagian dalam.</span></li>
+            <li><span class="node">v. jugularis externa</span><span class="note">Superfisial, menyilang m. sternocleidomastoideus di bawah platysma; bermuara ke v. subclavia. <span class="tag klinik">Klinik</span>Tampak menonjol saat tekanan vena meningkat.</span></li>
+            <li><span class="node">v. brachiocephalica</span><span class="note">Persatuan v. jugularis interna + v. subclavia di belakang ujung medial klavikula.</span>
+              <ul>
+                <li><span class="node">Dextra</span><span class="note">Pendek, hampir vertikal.</span></li>
+                <li><span class="node">Sinistra</span><span class="note">Lebih panjang, miring ke kanan di depan cabang arcus aortae.</span></li>
+              </ul>
+            </li>
+            <li><span class="node">v. cava superior</span><span class="note">Pertemuan kedua v. brachiocephalica setinggi kartilago costa I kanan. Tidak berkatup; menerima v. azygos. Menampung darah kepala, leher, ekstremitas atas, dinding dada.</span></li>
+            <li><span class="node">v. cava inferior</span><span class="note">Pertemuan v. iliaca communis dextra &amp; sinistra. Menampung darah tubuh bagian bawah, abdomen (termasuk v. renalis), dan panggul. v. iliaca communis sinistra lebih panjang karena VCI terletak di kanan garis tengah.</span></li>
+            <li><span class="node">Atrium dextrum</span><span class="note">Menerima v. cava superior, v. cava inferior, dan sinus coronarius → katup trikuspid → ventrikel kanan.</span></li>
+          </ul>
+          <a class="go" href="vena-cava.html">Lihat presentasi →</a>
+        </div>
+      </details>
+
+      <details class="topic">
+        <summary><span class="no">6</span><h2>Vena Ekstremitas Atas<span>Superfisial &amp; dalam</span></h2>
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+        <div class="topic-body">
+          <ul class="tree">
+            <li><span class="node">Vena dalam</span><span class="note">Berjalan mendampingi arteri (vena komitans), biasanya berpasangan.</span>
+              <ul>
+                <li><span class="node">vv. digitales</span><span class="note">Mengumpulkan darah dari jari.</span></li>
+                <li><span class="node">Arcus venosus palmaris</span><span class="note">Superficialis &amp; profundus, mengikuti arcus palmaris arteri.</span></li>
+                <li><span class="node">vv. radiales &amp; vv. ulnares</span><span class="note">Bergabung di fossa cubiti.</span></li>
+                <li><span class="node">vv. brachiales</span><span class="note">Bersama v. basilica membentuk v. axillaris.</span></li>
+                <li><span class="node">v. axillaris</span><span class="note">Menerima v. cephalica dan v. subscapularis; menjadi v. subclavia di tepi lateral costa I.</span></li>
+                <li><span class="node">v. subclavia</span><span class="note">Bersama v. jugularis interna membentuk v. brachiocephalica.</span></li>
+              </ul>
+            </li>
+            <li><span class="node">Vena superfisial</span><span class="note">Berasal dari jaringan vena dorsal tangan.</span>
+              <ul>
+                <li><span class="node">v. cephalica</span><span class="note">Sisi lateral (sisi ibu jari); bermuara ke v. axillaris.</span></li>
+                <li><span class="node">v. basilica</span><span class="note">Sisi medial (sisi kelingking); bergabung dengan vv. brachiales membentuk v. axillaris.</span></li>
+                <li><span class="node">v. mediana cubiti</span><span class="note">Penghubung v. cephalica dan v. basilica di fossa cubiti. <span class="tag klinik">Klinik</span>Tempat favorit pengambilan darah.</span></li>
+                <li><span class="node">v. mediana antebrachii</span><span class="note">Di tengah sisi depan lengan bawah.</span></li>
+              </ul>
+            </li>
+          </ul>
+          <a class="go" href="vena-ekstremitas-atas.html">Lihat presentasi →</a>
+        </div>
+      </details>
+
+      <details class="topic">
+        <summary><span class="no">7</span><h2>Vena Ekstremitas Bawah<span>Superfisial, dalam, perforans</span></h2>
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+        <div class="topic-body">
+          <ul class="tree">
+            <li><span class="node">Vena superfisial</span><span class="note">Berawal dari arcus venosus dorsalis pedis.</span>
+              <ul>
+                <li><span class="node">v. saphena magna</span><span class="note">Sisi medial, di depan malleolus medialis; bermuara ke v. femoralis melalui hiatus saphenus.</span></li>
+                <li><span class="node">v. saphena parva</span><span class="note">Sisi lateral, di belakang malleolus lateralis; bermuara ke v. poplitea.</span></li>
+              </ul>
+            </li>
+            <li><span class="node">Vena dalam</span><span class="note">Mengikuti arteri dengan nama yang sama.</span>
+              <ul>
+                <li><span class="node">vv. plantares → vv. tibiales posteriores &amp; vv. fibulares</span></li>
+                <li><span class="node">vv. tibiales anteriores</span></li>
+                <li><span class="node">v. poplitea</span><span class="note">Gabungan vv. tibiales anteriores dan posteriores; menerima v. saphena parva.</span></li>
+                <li><span class="node">v. femoralis</span><span class="note">Menerima v. profunda femoris, vv. circumflexae femoris, dan v. saphena magna.</span></li>
+                <li><span class="node">v. iliaca externa</span><span class="note">Lanjutan v. femoralis di bawah lig. inguinale.</span></li>
+                <li><span class="node">v. iliaca interna</span><span class="note">Dari panggul: vv. gluteae, vv. sacrales laterales, v. pudenda interna, v. obturatoria.</span></li>
+                <li><span class="node">v. iliaca communis → v. cava inferior</span></li>
+              </ul>
+            </li>
+            <li><span class="node">Vena perforans</span><span class="note">Menembus fascia profunda, menghubungkan vena superfisial ke vena dalam. Berkatup, aliran satu arah.</span>
+              <span class="note"><span class="tag klinik">Klinik</span>Katup rusak → darah berbalik ke vena superfisial → varises.</span></li>
+            <li><span class="node">Pompa otot betis</span><span class="note">Kontraksi otot menekan vena dalam dan mendorong darah ke atas; katup mencegah darah turun kembali. Penting saat berdiri melawan gravitasi.</span></li>
+          </ul>
+          <a class="go" href="vena-ekstremitas-bawah.html">Lihat presentasi →</a>
+        </div>
+      </details>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">Disusun dari materi presentasi Modul Kardiovaskular. Rujukan: Moore, Clinically Oriented Anatomy (8th ed.); Snell's Clinical Anatomy by Regions (10th ed.).</div>
+</footer>
+
+<script>
+  const all = () => document.querySelectorAll('details.topic');
+  document.getElementById('openAll').addEventListener('click', () => all().forEach(d => d.open = true));
+  document.getElementById('closeAll').addEventListener('click', () => all().forEach(d => d.open = false));
+</script>
 </body>
 </html>
